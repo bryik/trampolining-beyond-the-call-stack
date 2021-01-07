@@ -2,7 +2,9 @@
 
 I wrote a nice recursive solution to [an Interview Cake problem](https://www.interviewcake.com/question/javascript/merge-sorted-arrays?course=fc1&section=array-and-string-manipulation), but IC's solution was an iterative one. The logic is clearer in the recursive version, but it cannot handle arrays as large as the iterative version (JavaScript's max recursion limit prevents this).
 
-If JavaScript had tail call optimization (TCO), then I believe rewriting the recursive solution to be tail-recursive would solve the recursion limit problem. However, [JavaScript does not have TCO](https://stackoverflow.com/a/54721813/6591491)--is the recursive solution hopeless? [JohanP on Stack Overflow](https://stackoverflow.com/a/54719630/6591491) suggests "trampolining":
+If JavaScript had tail call optimization (TCO), then I believe rewriting the recursive solution to be tail-recursive would solve the recursion limit problem. However, [JavaScript does not have TCO](https://stackoverflow.com/a/54721813/6591491)--is the recursive solution hopeless? 
+
+[JohanP on Stack Overflow](https://stackoverflow.com/a/54719630/6591491) suggests "trampolining":
 
 > "...by using a trampoline technique, you can easily convert your code to run as if it is being tail optimized."
 
@@ -12,12 +14,12 @@ Is this true? Seems so:
 # deno run ./comparisons.ts
 TRAMPOLINE TIME
 Iterative solution vs optimized recursive solution...
-	mergeArraysIterative() took an average of 0.6 milliseconds to sort 1000 numbers.
-	mergeArraysTrampolinedOptimized() took an average of 0.6 milliseconds to sort 1000 numbers.
+    mergeArraysIterative() took an average of 0.6 milliseconds to sort 1000 numbers.
+    mergeArraysTrampolinedOptimized() took an average of 0.6 milliseconds to sort 1000 numbers.
 
 Extras...
-	mergeArraysRecursive() took an average of 47.6 milliseconds to sort 1000 numbers.
-	mergeArraysTrampolined() took an average of 14.4 milliseconds to sort 1000 numbers.
+    mergeArraysRecursive() took an average of 47.6 milliseconds to sort 1000 numbers.
+    mergeArraysTrampolined() took an average of 14.4 milliseconds to sort 1000 numbers.
 ```
 
 If you're interested in the trampoline technique, Raganwald has an [excellent article on it](https://raganwald.com/2013/03/28/trampolines-in-javascript.html).
