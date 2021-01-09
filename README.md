@@ -45,9 +45,9 @@ Is recursion simply a bad approach in languages that put limits on it? Or is the
 
 > "...when a function returns the result of calling itself, the language doesn’t actually perform another function call, it turns the whole thing into a loop for you." - [Raganwald](https://raganwald.com/2013/03/28/trampolines-in-javascript.html)
 
-Only functions that either return a value or return a function call to themselves are candidates for TCO (this description is pretty handwavy, checkout Raganwald's article for a more thorough explanation). `mergeArraysRecursive()` is not a candidate for TCO because it makes a recursive call and uses the result to construct an array to return `[elA, ...mergeArraysRecursive(restA, arrB)];`. That said, it can be rewritten to be tail-recursive [without too much trouble](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/mergeArraysTailRecursive.ts).
+Only functions that either return a value or return a function call to themselves are candidates for TCO (this description is pretty handwavy, checkout Raganwald's article for a more thorough explanation). `mergeArraysRecursive()` is not a candidate for TCO because it makes a recursive call and uses the result to construct an array to return `[elA, ...mergeArraysRecursive(restA, arrB)];`, but it can be rewritten to be tail-recursive [without too much trouble](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/mergeArraysTailRecursive.ts).
 
-Unfortunately, [JavaScript does not have TCO](https://stackoverflow.com/a/54721813/6591491); well, it does in Safari but Mozilla and Microsoft were unable or unwilling to implement it in their respective browsers (the [TC39 meeting notes are kind of interesting](https://github.com/tc39/notes/blob/master/meetings/2016-05/may-24.md)). So are we out of luck?
+Unfortunately, JavaScript does not have TCO; well, it does in Safari but Mozilla and Microsoft were [unable or unwilling to implement it in their respective browsers](https://stackoverflow.com/a/54721813/6591491). So are we out of luck?
 
 [JohanP on Stack Overflow](https://stackoverflow.com/a/54719630/6591491) suggests "trampolining":
 
@@ -87,7 +87,7 @@ Extras...
 
 Trampolining is a pretty interesting technique that calls back to a lot of things I had forgotten from university. The problem with recursive functions is that each recursive call requires a frame and these frames build up until a base case is reached. Raganwald has a great analogy for this with `factorial()`: "it's as if we actually wrote out 1 x 1 x 2 x 3 x 4 x ... before doing any calculations". 
 
-Functions in tail-recursive form have the same problem, but they don't actually need the frames to persist. A trampolined function returns a "continuation" (a function that can be called to continue a computation) and the [trampoline()](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/trampoline.ts) keeps calling these continuations until the result is reached--instead of a function calling itself recursively, you have a series of independent function calls.
+Functions in tail-recursive form have the same problem, but they don't actually need the frames to persist. A trampolined function returns a ["continuation"](https://en.wikipedia.org/wiki/Continuation) (a function that can be called to continue a computation) and the [trampoline()](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/trampoline.ts) keeps calling these continuations until the result is reached—instead of a function calling itself recursively, you have a series of independent function calls.
 
 ## development
 
