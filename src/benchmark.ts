@@ -39,7 +39,7 @@ export function benchmarkMergeArrays(f: Function, arrSize = 1000, rounds = 10) {
   const averageTime = sumOfTimes / times.length;
 
   console.log(
-    `\t${f.name}() took an average of ${
+    `    ${f.name}() took an average of ${
       averageTime.toFixed(3)
     } milliseconds to sort ${arrSize} numbers.`,
   );
