@@ -45,7 +45,7 @@ Is recursion simply a bad approach in languages that put limits on it? Or is the
 
 > "...when a function returns the result of calling itself, the language doesn’t actually perform another function call, it turns the whole thing into a loop for you." - [Raganwald](https://raganwald.com/2013/03/28/trampolines-in-javascript.html)
 
-Only functions that either return a value or return a function call to themselves are candidates for TCO (this description is pretty handwavy, checkout Raganwald's article for a more thorough explanation). `mergeArraysRecursive()` is not a candidate for TCO because it makes a recursive call and uses the result to construct an array to return `[elA, ...mergeArraysRecursive(restA, arrB)];`, but it can be rewritten to be tail-recursive [without too much trouble](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/mergeArraysTailRecursive.ts).
+Only functions that either return a value or return a function call to themselves are candidates for TCO (this description is pretty handwavy, checkout Raganwald's article for a more thorough explanation). `mergeArraysRecursive()` is not a candidate for TCO because it makes a recursive call and uses the result to construct an array `[elA, ...mergeArraysRecursive(restA, arrB)];`, but it can be rewritten to be tail-recursive [without too much trouble](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/mergeArraysTailRecursive.ts).
 
 Unfortunately, JavaScript does not have TCO; well, it does in Safari but Mozilla and Microsoft were [unable or unwilling to implement it in their respective browsers](https://stackoverflow.com/a/54721813/6591491). So are we out of luck?
 
