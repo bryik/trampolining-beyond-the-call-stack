@@ -89,6 +89,8 @@ Trampolining is a pretty interesting technique that calls back to a lot of thing
 
 Functions in tail-recursive form have the same problem, but they don't actually need the frames to persist. A trampolined function returns a ["continuation"](https://en.wikipedia.org/wiki/Continuation) (a function that can be called to continue a computation) and the [trampoline()](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/trampoline.ts) keeps calling these continuations until the result is reached—instead of a function calling itself recursively, you have a series of independent function calls.
 
+This has reminded me that recursion is a rather risky technique. Without TCO or trampolining, the recursion limit hangs above like the sword of Damocles. And even with these tools, one must take care to write in tail-recursive form. Iterative solutions may be more fiddly, but they are generally less abstract and probably what I'd go with at work.
+
 ## development
 
 First clone this repo and `cd` into it. You will need to have [deno](https://deno.land/) installed.
