@@ -39,7 +39,7 @@ function mergeArraysRecursive(
 }
 ```
 
-This is not optimal and JavaScript's recursion limit causes it to fail when either input array contains 1000 or more elements. [Interview Cake's solution](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/mergeArraysIterative.ts#L9) is optimal and works on arrays larger than 1000 elements thanks to using an iterative approach instead of recursion. However, juggling indices in a `while` loop is more error-prone and harder to follow.
+This is not optimal and JavaScript's recursion limit causes it to fail when either input array contains 10,000 or more elements. [Interview Cake's solution](https://github.com/bryik/trampolining-beyond-the-call-stack/blob/main/src/mergeArraysIterative.ts#L9) is optimal and works on arrays larger than 10,000 elements thanks to using an iterative approach instead of recursion. However, juggling indices in a `while` loop is more error-prone and harder to follow.
 
 Is recursion simply a bad approach in languages that put limits on it? Or is there a way to get around it? Raganwald has an excellent article on a topic closely related to these questions: [Trampolines in JavaScript](https://raganwald.com/2013/03/28/trampolines-in-javascript.html). This is a general problem with recursive techniques and languages where recursion is common typically have "tail-call optimization" (TCO). 
 
